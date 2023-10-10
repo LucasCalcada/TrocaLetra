@@ -5,7 +5,7 @@ var wordList;
 var attemptsHolder;
 var textInput;
 
-window.onload = () => {
+window.addEventListener("load", () => {
     GetJSON("./4Letras.json").then(r => {
         wordList = r;
         StartGame();
@@ -26,7 +26,7 @@ window.onload = () => {
             WordInput();
         }
     })
-}
+});
 
 function SendWord(){
     console.log(p);
