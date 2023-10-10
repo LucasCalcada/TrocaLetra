@@ -78,35 +78,35 @@ function CreateWordElement(palavra){
     return word;
 }
 
-function CountDiff(wordTry){
+function IsDiff1(wordAttempt){
     let diff = 0;
     for (let i = 0; i < LETTER_COUNT; i++) {
-        if(wordTry[i] != lastWord[i]){
+        if(wordAttempt[i] != lastWord[i]){
             diff++;
         }
     }
-    return diff;
+    return diff == 1;
+}
+
+function IsAnagram(wordAttempt){
+    let trySorted = wordAttempt.split("").sort().join("");
+    let lastSorted = lastWord.split("").sort().join("");
+    return trySorted === lastSorted;
 }
 
 function WordInput(){
     // Gets word in input field
-    let wordTry = textInput.value;
+    let wordAttempt = textInput.value;
 
     // Returns if wordTry is not in wordList
-    if(wordList.indexOf(wordTry) == -1) return;
-    
-    let diff = CountDiff(wordTry);
-    if(diff > 1) return;
-    if(diff == 1){
-        lastWord = wordTry;
-        let l = CreateWordElement(wordTry);
-        triesHolder.appendChild(l);
-    }
-    else if(diff == 0){
-        EndGame();
-    }
-    else{
+    if(wordList.indexOf(wordAttempt) == -1) return;
 
+    if(wordAttempt === wordF) EndGame();
+    
+    if(IsAnagram(wordAttempt) || IsDiff1(wordAttempt)){
+        lastWord = wordAttempt;
+        let l = CreateWordElement(wordAttempt);
+        triesHolder.appendChild(l);
     }
     textInput.value = "";
 }
