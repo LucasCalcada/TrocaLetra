@@ -1,8 +1,8 @@
-// Constante
+// Constants
 const LETTER_COUNT = 4;
-// Variáveis globais
+// Global Vars
 var wordList;
-var triesHolder;
+var attemptsHolder;
 var textInput;
 
 window.onload = () => {
@@ -13,7 +13,7 @@ window.onload = () => {
 
     textInput = document.getElementById("textIn");
     textInput.maxLength = LETTER_COUNT;
-    triesHolder = document.getElementById("attemptsHolder");
+    attemptsHolder = document.getElementById("attemptsHolder");
 
     // Send button click listener
     document.getElementById("send").addEventListener("click",() => {
@@ -64,7 +64,7 @@ function StartGame(){
 function CreateLetterElement(letra){
     let el = document.createElement("p");
     el.classList.add("letter");
-    el.innerHTML = letra;
+    el.innerHTML = letra.toUpperCase();
     return el;
 }
 
@@ -99,14 +99,18 @@ function WordInput(){
     let wordAttempt = textInput.value;
 
     // Returns if wordTry is not in wordList
-    if(wordList.indexOf(wordAttempt) == -1) return;
+    if(wordList.indexOf(wordAttempt) == -1){
+        textInput.value = "";
+        return;
+    } 
 
     if(wordAttempt === wordF) EndGame();
     
     if(IsAnagram(wordAttempt) || IsDiff1(wordAttempt)){
         lastWord = wordAttempt;
         let l = CreateWordElement(wordAttempt);
-        triesHolder.appendChild(l);
+        attemptsHolder.appendChild(l);
+        attemptsHolder.scrollTop = attemptsHolder.scrollHeight;
     }
     textInput.value = "";
 }
