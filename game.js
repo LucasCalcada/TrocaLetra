@@ -16,9 +16,9 @@ window.addEventListener("load", () => {
     attemptsHolder = document.getElementById("attemptsHolder");
 
     // Send button click listener
-    document.getElementById("send").addEventListener("click",() => {
-        WordInput();
-    });
+    //document.getElementById("send").addEventListener("click",() => {
+    //    WordInput();
+    //});
 
     // Enter keyboard button listener
     textInput.addEventListener("keyup",event => {
