@@ -1,103 +1,104 @@
 // Constante
-const LETRAS = 5;
+const LETTER_COUNT = 4;
 // Variáveis globais
-var palavras;
-var tentativas;
-var textoInput;
+var wordList;
+var triesHolder;
+var textInput;
 
 window.onload = () => {
-    LerJSON("./cincoLetras.json").then(r => {
-        palavras = r;
-        IniciarJogo();
+    GetJSON("./4Letras.json").then(r => {
+        wordList = r;
+        StartGame();
     });
 
-    textoInput = document.getElementById("textoIn");
-    tentativas = document.getElementById("tentativas");
+    textInput = document.getElementById("textIn");
+    textInput.maxLength = LETTER_COUNT;
+    triesHolder = document.getElementById("attemptsHolder");
 
-    document.getElementById("enviar").addEventListener("click",() => {
-        let p = textoInput.value;
+    document.getElementById("send").addEventListener("click",() => {
+        let p = textInput.value;
         console.log(p);
-        Tentativa(p);
+        WordInput(p);
     });
 }
 
 // Carrega o JSON com as palavras
-async function LerJSON(caminho){
-    let file = await fetch(caminho);
+async function GetJSON(path){
+    let file = await fetch(path);
     let json = await file.json();
     return json;
 }
 
 // Retorna uma palavra aleatoria da lista
-function EscolherPalavra(){
-    let maxIndex = palavras.length - 1;
+function ChooseWord(){
+    let maxIndex = wordList.length - 1;
     let index = Math.round(Math.random() * maxIndex);
-    return palavras[index];
+    return wordList[index];
 }
 
 
 // Definição Palavras iniciais e finais
-var palavraI, palavraF;
-var ultimaPalavra;
-function IniciarJogo(){
+var wordI, wordF;
+var lastWord;
+function StartGame(){
     // Escolhe as palavras iniciais e finais
-    palavraI = EscolherPalavra();
-    palavraF = EscolherPalavra();
-    ultimaPalavra = palavraI;
+    wordI = ChooseWord();
+    wordF = ChooseWord();
+    lastWord = wordI;
 
-    let linhaI = CriarLinha(palavraI);
-    let linhaF = CriarLinha(palavraF);
-    document.getElementById("palavraI").appendChild(linhaI);
-    document.getElementById("palavraF").appendChild(linhaF);
+    let linhaI = CreateWordElement(wordI);
+    let linhaF = CreateWordElement(wordF);
+    document.getElementById("wordI").appendChild(linhaI);
+    document.getElementById("wordF").appendChild(linhaF);
 }
 
 // Cria o elemento para uma letra
-function CriarLetra(letra){
+function CreateLetterElement(letra){
     let el = document.createElement("p");
-    el.classList.add("letra");
+    el.classList.add("letter");
     el.innerHTML = letra;
     return el;
 }
 
 // Cria os elementos para uma palavra
-function CriarLinha(palavra){
-    let linha = document.createElement("div");
-    linha.classList.add("linha");
+function CreateWordElement(palavra){
+    let word = document.createElement("div");
+    word.classList.add("word");
     Array.from(palavra).forEach(l => {
-        let letra = CriarLetra(l);
-        linha.appendChild(letra);
+        let letter = CreateLetterElement(l);
+        word.appendChild(letter);
     });
-    return linha;
+    return word;
 }
 
-function ContarDiff(pTentativa){
+function CountDiff(wordTry){
     let diff = 0;
-    for (let i = 0; i < LETRAS; i++) {
-        if(pTentativa[i] != ultimaPalavra[i]){
+    for (let i = 0; i < LETTER_COUNT; i++) {
+        if(wordTry[i] != lastWord[i]){
             diff++;
         }
     }
     return diff;
 }
 
-function Tentativa(pTentativa){
-    if(palavras.indexOf(pTentativa) == -1) return;
-    let diff = ContarDiff(pTentativa);
+function WordInput(wordTry){
+    if(wordList.indexOf(wordTry) == -1) return;
+    let diff = CountDiff(wordTry);
     console.log(diff);
     if(diff == 0){
-        FimDeJogo();
+        EndGame();
         return;
     }
     else if(diff == 2 || diff == 1){
-        ultimaPalavra = pTentativa;
-        let l = CriarLinha(pTentativa);
-        tentativas.appendChild(l);
+        lastWord = wordTry;
+        let l = CreateWordElement(wordTry);
+        triesHolder.appendChild(l);
     }
     else{
         return;
     }
 }
 
-function FimDeJogo(){
+function EndGame(){
 
 }
