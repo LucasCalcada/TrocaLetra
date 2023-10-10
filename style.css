@@ -28,7 +28,7 @@ html,body{
 /* Word holders */
 .main{
     height: 100%;
-    width: 80%;
+    width: 30%;
 
     display: flex;
     flex-direction: column;
@@ -38,10 +38,10 @@ html,body{
 
 #attemptsHolder{
     height: 100%;
+    width: 100%;
 
     display: flex;
     flex-direction: column;
-
 
     overflow-y: scroll;
     scrollbar-width: none;
@@ -50,18 +50,20 @@ html,body{
 
 /* Word styling */
 .word{
-    margin: 10px;
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
 
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
 }
 
 .letter{
-    width: 100px;
-    height: 100px;
+    width: 23%;
+    aspect-ratio: 1 / 1;
     border-radius: 20%;
     margin: 0;
-    margin-left: 5px;
 
     background-color: var(--letter-color);
 
@@ -71,7 +73,7 @@ html,body{
 
     user-select: none;
 
-    font-size: 5em;
+    font-size: 5vw;
     font-weight: bolder;
 }
 
@@ -83,7 +85,7 @@ html,body{
 /* Input field styling */
 .inputField{
     height: 200px;
-    width: 50%;
+    width: 100%;
 
     margin: 20px;
 
