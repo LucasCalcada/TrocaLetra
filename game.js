@@ -15,44 +15,52 @@ window.onload = () => {
     textInput.maxLength = LETTER_COUNT;
     triesHolder = document.getElementById("attemptsHolder");
 
+    // Send button click listener
     document.getElementById("send").addEventListener("click",() => {
-        let p = textInput.value;
-        console.log(p);
-        WordInput(p);
+        WordInput();
     });
+
+    // Enter keyboard button listener
+    textInput.addEventListener("keyup",event => {
+        if(event.key == "Enter"){
+            WordInput();
+        }
+    })
 }
 
-// Carrega o JSON com as palavras
+function SendWord(){
+    console.log(p);
+    WordInput(p);
+}
+// Loads word list JSON
 async function GetJSON(path){
     let file = await fetch(path);
     let json = await file.json();
     return json;
 }
 
-// Retorna uma palavra aleatoria da lista
+// Chooses a random word from the word list
 function ChooseWord(){
     let maxIndex = wordList.length - 1;
     let index = Math.round(Math.random() * maxIndex);
     return wordList[index];
 }
 
-
-// Definição Palavras iniciais e finais
 var wordI, wordF;
 var lastWord;
 function StartGame(){
-    // Escolhe as palavras iniciais e finais
+    // Choosing initial and final words
     wordI = ChooseWord();
     wordF = ChooseWord();
     lastWord = wordI;
 
-    let linhaI = CreateWordElement(wordI);
-    let linhaF = CreateWordElement(wordF);
-    document.getElementById("wordI").appendChild(linhaI);
-    document.getElementById("wordF").appendChild(linhaF);
+    // Creates initial and final word elements
+    let wordIElement = CreateWordElement(wordI);
+    let wordFElement = CreateWordElement(wordF);
+    document.getElementById("wordI").appendChild(wordIElement);
+    document.getElementById("wordF").appendChild(wordFElement);
 }
 
-// Cria o elemento para uma letra
 function CreateLetterElement(letra){
     let el = document.createElement("p");
     el.classList.add("letter");
@@ -60,7 +68,6 @@ function CreateLetterElement(letra){
     return el;
 }
 
-// Cria os elementos para uma palavra
 function CreateWordElement(palavra){
     let word = document.createElement("div");
     word.classList.add("word");
@@ -81,22 +88,27 @@ function CountDiff(wordTry){
     return diff;
 }
 
-function WordInput(wordTry){
+function WordInput(){
+    // Gets word in input field
+    let wordTry = textInput.value;
+
+    // Returns if wordTry is not in wordList
     if(wordList.indexOf(wordTry) == -1) return;
+    
     let diff = CountDiff(wordTry);
-    console.log(diff);
-    if(diff == 0){
-        EndGame();
-        return;
-    }
-    else if(diff == 2 || diff == 1){
+    if(diff > 1) return;
+    if(diff == 1){
         lastWord = wordTry;
         let l = CreateWordElement(wordTry);
         triesHolder.appendChild(l);
     }
-    else{
-        return;
+    else if(diff == 0){
+        EndGame();
     }
+    else{
+
+    }
+    textInput.value = "";
 }
 
 function EndGame(){
