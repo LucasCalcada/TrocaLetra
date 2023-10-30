@@ -13,12 +13,11 @@ window.addEventListener("load", () => {
 
     textInput = document.getElementById("textIn");
     textInput.maxLength = LETTER_COUNT;
-    attemptsHolder = document.getElementById("attemptsHolder");
 
-    // Send button click listener
-    //document.getElementById("send").addEventListener("click",() => {
-    //    WordInput();
-    //});
+    // Word holders
+    wordIHolder = document.getElementById("wordI");
+    wordFHolder = document.getElementById("wordF");
+    attemptsHolder = document.getElementById("attemptsHolder");
 
     // Enter keyboard button listener
     textInput.addEventListener("keyup",event => {
@@ -28,15 +27,17 @@ window.addEventListener("load", () => {
     })
 });
 
-function SendWord(){
-    console.log(p);
-    WordInput(p);
-}
 // Loads word list JSON
 async function GetJSON(path){
     let file = await fetch(path);
     let json = await file.json();
     return json;
+}
+
+function ClearChildNodes(element){
+    while(element.childElementCount > 0){
+        element.removeChild(element.firstChild)
+    }
 }
 
 // Chooses a random word from the word list
@@ -46,19 +47,28 @@ function ChooseWord(){
     return wordList[index];
 }
 
-var wordI, wordF;
+var wordIString;
+var wordFString;
 var lastWord;
+var wordIHolder;
+var wordFHolder;
 function StartGame(){
+    document.getElementById("endScreen").visibility = "hidden";
     // Choosing initial and final words
-    wordI = ChooseWord();
-    wordF = ChooseWord();
-    lastWord = wordI;
+    wordIString = ChooseWord();
+    wordFString = ChooseWord();
+    lastWord = wordIString;
+
+    // Clears child elements
+    ClearChildNodes(wordIHolder);
+    ClearChildNodes(wordFHolder);
+    ClearChildNodes(attemptsHolder);
 
     // Creates initial and final word elements
-    let wordIElement = CreateWordElement(wordI);
-    let wordFElement = CreateWordElement(wordF);
-    document.getElementById("wordI").appendChild(wordIElement);
-    document.getElementById("wordF").appendChild(wordFElement);
+    let wordIElement = CreateWordElement(wordIString);
+    let wordFElement = CreateWordElement(wordFString);
+    wordIHolder.appendChild(wordIElement)
+    wordFHolder.appendChild(wordFElement)
 }
 
 function CreateLetterElement(letra){
@@ -104,7 +114,7 @@ function WordInput(){
         return;
     } 
 
-    if(wordAttempt === wordF) EndGame();
+    if(wordAttempt === wordFString) EndGame();
     
     if(IsAnagram(wordAttempt) || IsDiff1(wordAttempt)){
         lastWord = wordAttempt;
@@ -116,5 +126,5 @@ function WordInput(){
 }
 
 function EndGame(){
-
+    document.getElementById("endScreen").visibility = "visible";
 }
