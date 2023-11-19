@@ -126,9 +126,8 @@ function WordInput(){
 
     attemptCounter++;
 
-    if(wordAttempt == wordFString) EndGame();
-    
     if(IsAnagram(wordAttempt) || IsDiff1(wordAttempt)){
+        if(wordAttempt == wordFString) EndGame();
         lastWord = wordAttempt;
         let l = CreateWordElement(wordAttempt);
         attemptsHolder.appendChild(l);
