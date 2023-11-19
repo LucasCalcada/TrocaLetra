@@ -11,6 +11,8 @@ window.addEventListener("load", () => {
         StartGame();
     });
 
+    document.getElementById("replayButton").addEventListener("click", StartGame);
+
     textInput = document.getElementById("textIn");
     textInput.maxLength = LETTER_COUNT;
 
@@ -52,8 +54,11 @@ var wordFString;
 var lastWord;
 var wordIHolder;
 var wordFHolder;
+var attemptCounter = 0;
 function StartGame(){
+    // Hide end screen if visible
     document.getElementById("endScreen").visibility = "hidden";
+    document.getElementById("endScreen").opcity = "0";
     // Choosing initial and final words
     wordIString = ChooseWord();
     wordFString = ChooseWord();
@@ -69,6 +74,11 @@ function StartGame(){
     let wordFElement = CreateWordElement(wordFString);
     wordIHolder.appendChild(wordIElement)
     wordFHolder.appendChild(wordFElement)
+
+    // Hide end game screen
+    document.getElementById("endScreen").style.visibility = "hidden";
+    // Reset attempt counter
+    attemptCounter = 0;
 }
 
 function CreateLetterElement(letra){
@@ -114,7 +124,9 @@ function WordInput(){
         return;
     } 
 
-    if(wordAttempt === wordFString) EndGame();
+    attemptCounter++;
+
+    if(wordAttempt == wordFString) EndGame();
     
     if(IsAnagram(wordAttempt) || IsDiff1(wordAttempt)){
         lastWord = wordAttempt;
@@ -126,5 +138,8 @@ function WordInput(){
 }
 
 function EndGame(){
-    document.getElementById("endScreen").visibility = "visible";
+    // Show end game screen
+    document.getElementById("endScreen").style.visibility = "visible";
+    document.getElementById("endScreen").style.opacity= "100%";
+    document.getElementById("endText").innerHTML = attemptCounter.toString();
 }
