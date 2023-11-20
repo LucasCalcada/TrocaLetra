@@ -66,7 +66,7 @@ html,body{
 
 .letter{
     width: 23%;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 1;
     border-radius: 20%;
     margin: 0;
 
@@ -83,8 +83,8 @@ html,body{
 }
 
 .fixedWord > .word > .letter{
-    background-color: var(--text) !important;
-    color: var(--letter-color) !important;
+    background-color: var(--text);
+    color: var(--letter-color);
 }
 
 /* Input field styling */
@@ -106,30 +106,16 @@ html,body{
     border: 0;
     padding: 20px;
     outline: none;
+    text-align: center;
 
     box-sizing: border-box;
 
-    font-size: 300%;
+    font-size: 3em;
     font-weight: bolder;
     text-transform: uppercase;
     color: var(--text);
 
     background-color: var(--letter-color);
-}
-
-.inputField > button{
-    aspect-ratio: 1;
-    border-radius: 0 20px 20px 0;
-
-    border: none;
-    outline: none;
-
-    display: block;
-
-    background-color: var(--letter-color);
-}
-.inputField > button:hover{
-    background-color: #1a2b4f;
 }
 
 /* End Screen */
