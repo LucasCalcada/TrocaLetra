@@ -24,6 +24,15 @@ html,body{
 
     background-color: var(--background);
 }
+/* Top bar */
+.topBar{
+    height: 10%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
 
 /* Word holders */
 .main{
@@ -78,7 +87,7 @@ html,body{
 
     user-select: none;
 
-    font-size: 5vw;
+    font-size: 3vw;
     font-weight: bolder;
 }
 
