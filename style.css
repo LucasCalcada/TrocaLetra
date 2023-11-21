@@ -145,7 +145,7 @@ html,body{
     text-align: center;
 
     backdrop-filter: blur(10px);
-    transition: opacity;
+    transition: all;
     transition-duration: 1s;
     opacity: 0;
 }

@@ -57,8 +57,8 @@ var wordFHolder;
 var attemptCounter = 0;
 function StartGame(){
     // Hide end screen if visible
-    document.getElementById("endScreen").visibility = "hidden";
-    document.getElementById("endScreen").opcity = "0";
+    document.getElementById("endScreen").style.opacity = "0%";
+    document.getElementById("endScreen").style.visibility = "hidden";
     // Choosing initial and final words
     wordIString = ChooseWord();
     wordFString = ChooseWord();
@@ -75,8 +75,6 @@ function StartGame(){
     wordIHolder.appendChild(wordIElement)
     wordFHolder.appendChild(wordFElement)
 
-    // Hide end game screen
-    document.getElementById("endScreen").style.visibility = "hidden";
     // Reset attempt counter
     attemptCounter = 0;
 }
