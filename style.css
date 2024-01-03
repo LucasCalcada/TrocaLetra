@@ -155,3 +155,6 @@ html,body{
 #endText::after{
     content: " palavras!";
 }
+#replayButton{
+    width: 40pt;
+}
