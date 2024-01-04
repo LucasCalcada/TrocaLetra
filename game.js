@@ -6,7 +6,7 @@ var attemptsHolder;
 var textInput;
 
 window.addEventListener("load", () => {
-    GetJSON("./4Letras.json").then(r => {
+    GetJSON("./assets/wordLists/pt/4_letters.json").then(r => {
         wordList = r;
         StartGame();
     });
